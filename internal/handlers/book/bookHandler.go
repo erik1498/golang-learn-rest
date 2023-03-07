@@ -2,7 +2,8 @@ package bookHandler
 
 import (
 	"learn-rest/database"
-	"learn-rest/internal/dto"
+	dto "learn-rest/internal/dto/request"
+	"learn-rest/internal/helper"
 	"learn-rest/internal/models"
 	"net/http"
 
@@ -87,6 +88,11 @@ func UpdateBook(c *fiber.Ctx) error {
 	err := c.BodyParser(&updateBook)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": http.StatusInternalServerError, "message": "Review your input", "data": nil})
+	}
+
+	errValidation := helper.ValidateStruct(&updateBook)
+	if errValidation != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"status": http.StatusBadRequest, "message": "Error Validation", "validation": errValidation})
 	}
 
 	book.Title = updateBook.Title
