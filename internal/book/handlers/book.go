@@ -1,11 +1,9 @@
-package bookHandler
+package handlers
 
 import (
 	"learn-rest/database"
-	request "learn-rest/internal/dto/request"
-	"learn-rest/internal/dto/response"
+	"learn-rest/internal/book/models"
 	"learn-rest/internal/helper"
-	"learn-rest/internal/models"
 	"log"
 	"net/http"
 
@@ -16,10 +14,9 @@ import (
 func GetAllBook(c *fiber.Ctx) error {
 	log.Println("Get All Book")
 	db := database.DB
-	var book []response.BookResponse
+	var book []models.BookResponse
 
 	db.Raw("SELECT * FROM `books`").Scan(&book)
-	// db.Find(&book)
 
 	if len(book) == 0 {
 		return c.Status(http.StatusNotFound).JSON(
@@ -88,7 +85,7 @@ func UpdateBook(c *fiber.Ctx) error {
 	if book.ID == uuid.Nil {
 		return c.Status(404).JSON(fiber.Map{"status": http.StatusNotFound, "message": "Data not found", "data": nil})
 	}
-	var updateBook request.UpdateBook
+	var updateBook models.UpdateBook
 	err := c.BodyParser(&updateBook)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"status": http.StatusInternalServerError, "message": "Review your input", "data": nil})

@@ -1,8 +1,8 @@
-package routers
+package internal
 
 import (
+	"learn-rest/internal/book"
 	"learn-rest/internal/middleware/jwt/routers"
-	book "learn-rest/internal/routers/book"
 
 	"github.com/gofiber/fiber/v2"
 )

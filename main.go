@@ -2,7 +2,7 @@ package main
 
 import (
 	"learn-rest/database"
-	"learn-rest/internal/routers"
+	"learn-rest/internal"
 
 	// jwtware "github.com/gofiber/jwt/v3"
 
@@ -13,7 +13,7 @@ import (
 func main() {
 	app := fiber.New()
 	database.InitialDB()
-	routers.SetupRoutes(app)
+	internal.SetupRoutes(app)
 
 	app.Use(cors.New(cors.ConfigDefault))
 	// app.Use(jwtware.New(jwtware.Config{

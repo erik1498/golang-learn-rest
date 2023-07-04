@@ -2,7 +2,7 @@ package book
 
 import (
 	"learn-rest/config"
-	bookHandler "learn-rest/internal/handlers/book"
+	"learn-rest/internal/book/handlers"
 
 	jwtware "github.com/gofiber/jwt/v3"
 
@@ -16,9 +16,9 @@ func SetupBookRoutes(router fiber.Router) {
 		SigningKey: []byte(config.Config("JWT_SECRET")),
 	}))
 
-	book.Get("/", bookHandler.GetAllBook)
-	book.Get("/:bookId", bookHandler.GetBook)
-	book.Post("/create", bookHandler.CreateBook)
-	book.Put("/:bookId", bookHandler.UpdateBook)
-	book.Delete("/:bookId", bookHandler.DeleteBook)
+	book.Get("/", handlers.GetAllBook)
+	book.Get("/:bookId", handlers.GetBook)
+	book.Post("/create", handlers.CreateBook)
+	book.Put("/:bookId", handlers.UpdateBook)
+	book.Delete("/:bookId", handlers.DeleteBook)
 }

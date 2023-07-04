@@ -1,4 +1,4 @@
-package response
+package models
 
 type BookResponse struct {
 	Title     string `json:"title"`

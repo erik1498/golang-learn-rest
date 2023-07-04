@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 	"learn-rest/config"
-	"learn-rest/internal/models"
+	"learn-rest/internal/book/models"
 	"log"
 
 	"gorm.io/driver/mysql"
