@@ -6,6 +6,7 @@ import (
 	"learn-rest/internal/dto/response"
 	"learn-rest/internal/helper"
 	"learn-rest/internal/models"
+	"log"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -13,6 +14,7 @@ import (
 )
 
 func GetAllBook(c *fiber.Ctx) error {
+	log.Println("Get All Book")
 	db := database.DB
 	var book []response.BookResponse
 
