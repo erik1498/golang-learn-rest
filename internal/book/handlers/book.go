@@ -3,6 +3,7 @@ package handlers
 import (
 	"learn-rest/database"
 	"learn-rest/internal/book/models"
+	"learn-rest/internal/book/repository"
 	"learn-rest/internal/helper"
 	"log"
 	"net/http"
@@ -13,10 +14,8 @@ import (
 
 func GetAllBook(c *fiber.Ctx) error {
 	log.Println("Get All Book")
-	db := database.DB
-	var book []models.BookResponse
-
-	db.Raw("SELECT * FROM `books`").Scan(&book)
+	book := repository.GetAllBook()
+	log.Println("Book Length Data", len(book))
 
 	if len(book) == 0 {
 		return c.Status(http.StatusNotFound).JSON(
@@ -38,7 +37,6 @@ func GetAllBook(c *fiber.Ctx) error {
 }
 
 func CreateBook(c *fiber.Ctx) error {
-	db := database.DB
 	book := new(models.Book)
 
 	err := c.BodyParser(book)
@@ -48,9 +46,7 @@ func CreateBook(c *fiber.Ctx) error {
 
 	book.ID = uuid.New()
 
-	err = db.Create(&book).Error
-
-	if err != nil {
+	if repository.CreateBook(*book) != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"status": http.StatusBadRequest, "message": "Error create book", "data": nil})
 	}
 
